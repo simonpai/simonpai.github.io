@@ -20,7 +20,7 @@ class: pg-index
 		{% elsif post.content contains '<!--summary-->' %}
 			{{ post.content | split:'<!--summary-->' | second }} ...
 		{% else %}
-			{{ post.content | truncatewords: 100 | strip_html }}
+			{{ post.content | truncatewords: 80 | strip_html }}
 		{% endif %}
 		</div>
 	</div>
