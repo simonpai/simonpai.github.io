@@ -16,9 +16,9 @@ class: pg-index
 		{% if post.summary %}
 			{{ post.summary }}
 		{% elsif post.content contains '<!--more-->' %}
-			{{ post.content | split:'<!--more-->' | first }}
+			{{ post.content | split:'<!--more-->' | first }} ...
 		{% elsif post.content contains '<!--summary-->' %}
-			{{ post.content | split:'<!--summary-->' | second }}
+			{{ post.content | split:'<!--summary-->' | second }} ...
 		{% else %}
 			{{ post.content | truncatewords: 100 | strip_html }}
 		{% endif %}
