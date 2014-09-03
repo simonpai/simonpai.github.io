@@ -1,0 +1,17 @@
+---
+layout: default
+class: pg-page
+---
+
+<div class="posts">
+{% for post in site.posts %}
+	<div class="post summary">
+		<div class="header">
+			<a href="{{ post.url }}">
+				<h2 class="title">{{ post.title }}</h2>
+			</a>
+			<span class="date">{{ post.date | date: '%B %d, %Y' }}</span>
+		</div>
+	</div>
+{% endfor %}
+</div>

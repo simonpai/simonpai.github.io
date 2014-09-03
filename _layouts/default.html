@@ -1,0 +1,40 @@
+---
+layout: base
+---
+
+<header>
+	<div class="container">
+		<div class="navbar-header">
+			<button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+				<a>
+					<i class="fa fa-bars"></i>
+				</a>
+			</button>
+			<a href="../" class="navbar-brand">{{ site.name }}</a>
+		</div>
+		<nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+			<ul class="nav navbar-nav">
+				<li>
+					<a class="page-link" href="/archive">Archive</a>
+				</li>
+			</ul>
+			<ul class="nav navbar-nav navbar-right">
+				<li>
+					<a class="page-link" href="/about">About</a>
+				</li>
+			</ul>
+		</nav>
+	</div>
+</header>
+
+<div id="body">
+	<div class="container">
+		{{ content }}
+	</div>
+</div>
+
+<footer>
+	<div class="container">
+		
+	</div>
+</footer>

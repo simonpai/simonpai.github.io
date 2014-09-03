@@ -1,0 +1,28 @@
+---
+layout: default
+class: pg-index
+---
+
+<div class="posts">
+{% for post in site.posts %}
+	<div class="post summary">
+		<div class="header">
+			<a href="{{ post.url }}">
+				<h2 class="title">{{ post.title }}</h2>
+			</a>
+			<span class="date">{{ post.date | date: '%B %d, %Y' }}</span>
+		</div>
+		<div class="body">
+		{% if post.summary %}
+			{{ post.summary }}
+		{% elsif post.content contains '<!--more-->' %}
+			{{ post.content | split:'<!--more-->' | first }}
+		{% elsif post.content contains '<!--summary-->' %}
+			{{ post.content | split:'<!--summary-->' | second }}
+		{% else %}
+			{{ post.content | truncatewords: 100 | strip_html }}
+		{% endif %}
+		</div>
+	</div>
+{% endfor %}
+</div>

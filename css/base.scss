@@ -1,0 +1,176 @@
+---
+---
+
+// semantics //
+$c-208a: #1C2F40;
+$c-208b: #CFDBE5;
+$c-gray: #888;
+
+$c-208a-b40: #2D4B66;
+$c-208a-b55: #3E678C;
+$c-208a-b60: #437199;
+
+$c-body: $c-208a;
+$c-link: $c-208a-b60;
+$c-link-hover: $c-208a-b40;
+
+$screen-xs-max: 767px;
+$screen-sm-min: $screen-xs-max + 1px;
+
+$header-height: 48px;
+$p-gap: 8px;
+
+// reset //
+body, h1, h2, h3, h4, h5, h6 {
+	font-family: Arial, Helvetica, FreeSans, "蘋果儷中黑", "微軟正黑體", sans-serif;
+}
+h1, .h1 {
+	margin-top: 64px;
+}
+h2, .h2 {
+	margin-top: 48px;
+}
+h3, .h3 {
+	margin-top: 32px;
+}
+h4, .h4, h5, .h5, h6, .h6 {
+	margin-top: 24px;
+}
+body {
+	line-height: 1.6;
+	font-size: 16px;
+	color: $c-body;
+}
+p, ul, ol {
+	margin-bottom: $p-gap;
+}
+a {
+	color: $c-link;
+	
+	&:hover,
+	&:focus {
+		color: $c-link-hover;
+		text-decoration: none;
+		outline: none;
+	}
+}
+.nav > li > a {
+	&:hover, &:focus {
+		background-color: transparent;
+	}
+}
+
+// common //
+.card-shadow {
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.26);
+}
+ul.clear {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+
+
+// header //
+header {
+	position: relative;
+	
+	> .container {
+		height: $header-height;
+		padding: 0 16px;
+		border-bottom: 1px solid $c-link;
+	}
+	.navbar-header, 
+	.navbar-brand, 
+	.navbar-toggle,
+	.navbar-toggle > a {
+		height: 100%;
+	}
+	.navbar-brand, 
+	.navbar-nav > li > .page-link {
+		line-height: $header-height;
+		padding: 0;
+	}
+	.navbar-toggle {
+		$padding: 8px;
+		$btn-size: $header-height - $padding * 2;
+		
+		margin: 0;
+		padding: $padding;
+		a {
+			display: block;
+			text-align: center;
+			width: $btn-size;
+		}
+		i {
+			font-size: 18px;
+			line-height: $btn-size;
+		}
+	}
+}
+@media (min-width: $screen-sm-min) {
+	header {
+		.navbar-collapse, 
+		.navbar-nav, {
+			height: 100%;
+		}
+		.navbar-brand {
+			margin-right: 32px;
+		}
+		.navbar-nav > li > .page-link {
+			margin-right: 16px;
+		}
+		.navbar-nav.navbar-right > li > .page-link {
+			margin-right: 0;
+			margin-left: 16px;
+		}
+	}
+}
+@media (max-width: $screen-xs-max) {
+	header {
+		.navbar-header,
+		.navbar-nav {
+			margin-left: 1px !important;
+		}
+		.navbar-collapse {
+			border-bottom: 1px solid $c-link;
+			background: no-repeat 0 0 #FFF;
+			box-shadow: 0px 3px 3px 0px rgba(0, 0, 0, 0.3);
+		}
+	}
+}
+
+// footer //
+
+// body //
+#body {
+	> .container {
+		padding: 32px 16px;
+	}
+}
+.post {
+	margin-bottom: 48px;
+	
+	.header {
+		margin-bottom: $p-gap;
+		
+		> a {
+			display: inline-block;
+		}
+	}
+	.title {
+		display: inline;
+		margin: 0; // let header determine it
+	}
+	.date {
+		margin-left: $p-gap;
+		font-style: italic;
+		color: $c-gray;
+	}
+	img {
+		display: block;
+		margin: 0 auto;
+		max-width: 100%;
+	}
+}
