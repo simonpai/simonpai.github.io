@@ -13,7 +13,7 @@ It's a fun task manager with tree structure to the core. The project itself has 
 
 ###Who we are
 
-Before we started to work on this project, we were Dart enthusiasts known as the [Rikulo](http://rikulo.org) team, who have released several Dart libraies, including [UI framework](http://www.rikulo.org/projects/ui), [UI library](https://github.com/rikulo/bootjack), [web server](http://www.rikulo.org/projects/stream), [messaging server](https://github.com/rikulo/ripple), [database client](https://github.com/rikulo/couchclient), etc.
+Before we started to work on this project, we are Dart enthusiasts known as the [Rikulo](http://rikulo.org) team, who have released several Dart libraies, including [UI framework](http://www.rikulo.org/projects/ui), [UI library](https://github.com/rikulo/bootjack), [web server](http://www.rikulo.org/projects/stream), [messaging server](https://github.com/rikulo/ripple), [database client](https://github.com/rikulo/couchclient), etc.
 
 We were all excited by Dart's future worth when Dart was first released in 2011, and right away we started to work with Dart in small fractions of projects. Eventually we moved on to build a full application that consists of Dart majorly. Here we would like to humbly shared some of our experience, hoping to give you some information about developing in Dart.
 
@@ -95,6 +95,6 @@ Stream works seamlessly with the event loop model. Writing a request handler is 
 ##Conclusion
 
 We have an enjoyable experience working with Dart, and we are looking forward to more exciting developments in the Dart community. 
-Last but not least, if you are curious about what you can achieve with Dart, come and play with our app, [Quire](https://quire.io)! 
+Last but not least, if you are curious about what you can achieve with Dart, come and play with our app, [Quire](https://quire.io). It's free!
 
 ![Quire screenshot](/img/post/dart/quire-screenshot.png)
