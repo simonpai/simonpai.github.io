@@ -5,3 +5,6 @@ permalink: pretty
 encoding: UTF-8
 
 url: http://simonpai.github.io/
+github:
+  user: simonpai
+  repository: simonpai.github.io

@@ -55,4 +55,11 @@ page.commits = function (options, callback) {
 	github(_repos(options) + '/commits?path=' + path, callback);
 };
 
+page.historyPageURL = function (options) {
+	var user = (options && options.user) || defaultUser,
+		repo = (options && options.repo) || defaultRepo,
+		path = (options && options.path) || defaultPath;
+	return 'https://github.com/' + user + '/' + repo + '/commits/master/' + path;
+};
+
 })(this);
