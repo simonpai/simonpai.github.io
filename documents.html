@@ -1,0 +1,21 @@
+---
+layout: default
+class: pg-page
+---
+
+<div class="collections">
+{% for collection in site.data.collections %}
+	<div class="collection">
+		<div class="header">
+			<a href="{% if collection[1].url %}{{ collection[1].url }}{% else %}/{{ collection[0] }}{% endif %}">
+				<h2 class="title">{{ collection[1].title }}</h2>
+			</a>
+		</div>
+		{% if collection[1].description %}
+		<div class="body">
+			{{ collection[1].description }}
+		</div>
+		{% endif %}
+	</div>
+{% endfor %}
+</div>

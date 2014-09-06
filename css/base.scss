@@ -149,7 +149,9 @@ header {
 		padding: 32px 16px;
 	}
 }
-.post {
+.post,
+.document,
+.collection {
 	margin-bottom: 48px;
 	
 	.header {
@@ -157,6 +159,16 @@ header {
 		
 		> a {
 			display: inline-block;
+		}
+	}
+	.body {
+		margin-bottom: 48px; // h2 gap
+	}
+	.footer {
+		border-top: 1px solid $c-link;
+		
+		> :first-child {
+			margin-top: $p-gap;
 		}
 	}
 	.title {
