@@ -9,6 +9,7 @@ $c-gray: #888;
 $c-208a-b40: #2D4B66;
 $c-208a-b55: #3E678C;
 $c-208a-b60: #437199;
+$c-208b-a40: rgba(207, 219, 229, 0.4);
 
 $c-body: $c-208a;
 $c-link: $c-208a-b60;
@@ -44,6 +45,10 @@ body {
 p, ul, ol {
 	margin-bottom: $p-gap;
 }
+code {
+	color: $c-body;
+	background-color: $c-208b-a40;
+}
 a {
 	color: $c-link;
 	
@@ -58,6 +63,9 @@ a {
 	&:hover, &:focus {
 		background-color: transparent;
 	}
+}
+.syntaxhighlighter .container::before { // Syntax Highlighter over Bootstrap
+	display: none;
 }
 
 // common //
