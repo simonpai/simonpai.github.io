@@ -1,0 +1,10 @@
+{% if page.highlights %}
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shCore.min.css">
+	<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/styles/shThemeDefault.min.css">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shCore.min.js" type="text/javascript"></script>
+{% endif %}
+{% for lang in page.highlights %}
+	{% capture lang0 %}{{ lang | downcase }}{% endcapture %}
+	{% capture lang1 %}{{ site.data.highlights.aliases[lang0] }}{% endcapture %}
+	<script src="//cdnjs.cloudflare.com/ajax/libs/SyntaxHighlighter/3.0.83/scripts/shBrush{% if lang1 %}{{ lang1 }}{% else %}{{ lang }}{% endif %}.min.js" type="text/javascript"></script>
+{% endfor %}

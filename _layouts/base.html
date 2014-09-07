@@ -7,15 +7,19 @@
 	<meta property="og:title" content="{{ site.name }}" />
 	<meta property="og:image" content="{{ site.image }}" />
 	<meta property="og:description" content="{{ site.description }}" />
+	
 	<title>{{ site.name }}{% if page.title %} - {{ page.title }}{% endif %}</title>
+	
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/css/base.css" type="text/css">
 	{% for path in page.css %}
 	<link rel="stylesheet" href="{{ path }}" type="text/css">
 	{% endfor %}
+	
 	<script src="//code.jquery.com/jquery-1.10.2.min.js" type="text/javascript"></script>
 	<script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
+	{% include highlights.html %}
 	{% include env.html %}
 	<script src="/js/base.js" type="text/javascript"></script>
 	{% for path in page.js %}
