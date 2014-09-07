@@ -46,6 +46,7 @@ p, ul, ol {
 	margin-bottom: $p-gap;
 }
 code {
+	border-radius: 0;
 	color: $c-body;
 	background-color: $c-208b-a40;
 }
@@ -64,8 +65,14 @@ a {
 		background-color: transparent;
 	}
 }
-.syntaxhighlighter .container::before { // Syntax Highlighter over Bootstrap
+
+// syntax highlighter //
+.syntaxhighlighter .container::before { // fix Bootstrap influence
 	display: none;
+}
+html .syntaxhighlighter .comments, 
+html .syntaxhighlighter .comments a {
+	color: #008200 !important;
 }
 
 // common //
