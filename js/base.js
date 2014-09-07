@@ -1,3 +1,4 @@
+// github //
 (function (window) {
 
 'use strict';
@@ -61,5 +62,31 @@ page.historyPageURL = function (options) {
 		path = (options && options.path) || defaultPath;
 	return 'https://github.com/' + user + '/' + repo + '/commits/master/' + path;
 };
+
+})(this);
+
+
+
+// main //
+(function (window) {
+
+'use strict';
+
+var $ = window.jQuery;
+
+$(function () {
+	var SyntaxHighlighter = window.SyntaxHighlighter;
+	if (SyntaxHighlighter) {
+		$('pre > code').each(function () {
+			var cls = this.className,
+				parent = this.parentElement;
+			if (!cls.startsWith('language-'))
+				return;
+			parent.className = 'brush: ' + cls.substring(9) + '; ' + parent.className;
+			parent.innerHTML = this.innerHTML;
+		});
+		window.SyntaxHighlighter.all();
+	}
+});
 
 })(this);
