@@ -9,9 +9,11 @@ class: pg-page
 	{% assign c2 = site.data[c1.label] %}
 	<div class="collection">
 		<div class="header">
-			<a href="{% if c2.url %}{{ c2.url }}{% else %}/{{ c1.label }}{% endif %}">
-				<h2 class="title">{{ c2.title }}</h2>
-			</a>
+			<h2 class="title">
+				<a href="{% if c2.url %}{{ c2.url }}{% else %}/{{ c1.label }}{% endif %}">
+					{{ c2.title }}
+				</a>
+			</h2>
 		</div>
 		{% if c2.description %}
 		<div class="body">

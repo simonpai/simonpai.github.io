@@ -7,9 +7,9 @@ class: pg-index
 {% for post in site.posts %}
 	<div class="post summary">
 		<div class="header">
-			<a href="{{ post.url }}">
-				<h2 class="title">{{ post.title }}</h2>
-			</a>
+			<h2 class="title">
+				<a href="{{ post.url }}">{{ post.title }}</a>
+			</h2>
 			<span class="date">{{ post.date | date: '%B %d, %Y' }}</span>
 		</div>
 		<div class="body">
