@@ -4,4 +4,6 @@ class: pg-page
 title: Literal JS
 ---
 
-TOC here
+<div class="toc">
+	{% include toc.html sections=site.data.literaljs.sections %}
+</div>

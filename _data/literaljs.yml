@@ -1,2 +1,18 @@
 title: Literal JS
 description: 語言導向的 JavaScript 講義。
+
+sections:
+- title: 概要
+  sections:
+  - title: 引言
+    url: overview/introduction.html
+  - title: 文法
+    url: overview/grammar.html
+- title: 元素
+  sections:
+  - title: 變數與型別
+    url: element/variable.html
+  - title: 運算子
+    url: element/operator.html
+  - title: 流程控制
+    url: element/control-flow.html

@@ -1,0 +1,18 @@
+<ul class="sections">
+{% for section in include.sections %}
+	<li class="section">
+		<div class="header">
+			<span class="title">
+			{% if section.url %}
+				<a href="{{ section.url }}">{{ section.title }}</a>
+			{% else %}
+				{{ section.title }}
+			{% endif %}
+			</span>
+		</div>
+	{% if section.sections %}
+		{% include toc.html sections=section.sections %}
+	{% endif %}
+	</li>
+{% endfor %}
+</ul>
