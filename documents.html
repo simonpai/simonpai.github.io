@@ -4,19 +4,18 @@ class: pg-page
 ---
 
 <div class="collections">
-{% for cid in site.data.collections %}
-	{% capture url %}{{ site.data[cid].url }}{% endcapture %}
-	{% capture title %}{{ site.data[cid].title }}{% endcapture %}
-	{% capture description %}{{ site.data[cid].description }}{% endcapture %}
+{% for c in site.collections %}
+	{% assign c1 = c[1] %}
+	{% assign c2 = site.data[c1.label] %}
 	<div class="collection">
 		<div class="header">
-			<a href="{% if url %}{{ url }}{% else %}/{{ cid }}{% endif %}">
-				<h2 class="title">{{ title }}</h2>
+			<a href="{% if c2.url %}{{ c2.url }}{% else %}/{{ c1.label }}{% endif %}">
+				<h2 class="title">{{ c2.title }}</h2>
 			</a>
 		</div>
-		{% if description %}
+		{% if c2.description %}
 		<div class="body">
-			{{ description }}
+			{{ c2.description }}
 		</div>
 		{% endif %}
 	</div>
