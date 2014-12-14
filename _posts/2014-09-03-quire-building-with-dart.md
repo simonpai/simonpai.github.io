@@ -74,7 +74,7 @@ We are not using [AngularDART](https://angulardart.org/), because:
 We are not using [Polymer.dart](https://www.dartlang.org/polymer/) either, because:
 
 * Due to encapsulation and event re-targeting, ShadowDOM can't collaborate with selector oriented framework, for example, Bootstrap.
-* You can't inject style from the outside of ShadowDOM. If a 3rd party component set is made of Polymer, it's almost impossible for users to change its look-and-feel.
+* <del>You can't inject style from the outside of ShadowDOM. If a 3rd party component set is made of Polymer, it's almost impossible for users to change its look-and-feel.</del> Updated: As of Dec 2013, you can modify internal style from the outside. See [Shadow DOM 201](http://www.html5rocks.com/en/tutorials/webcomponents/shadowdom-201/#toc-style-cat-hat).
 
 ###DQuery & Bootjack
 
