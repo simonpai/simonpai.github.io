@@ -1,0 +1,505 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width,initial-scale=1">
+<meta http-equiv=content-language content="en">
+<meta name=color-scheme content="light dark">
+<meta name=description content="In the autumn of 2018 we started an epic project of a next generation SSP system, to turn our hardcoded fixed-order ad request model to a fully configurable one. This pretty much guaranteed a large boost of revenue and a total revision of our code base.
+Background     We were in a heavily solution-oriented business. In this project, a nearly zero downtime was mandatory. We had a small dev team, consisting of 2 senior devs and 1 junior, maintaining several other system components at the same time.">
+<meta name=keywords content>
+<meta name=twitter:card content="summary">
+<meta name=twitter:title content="Strangler Fig">
+<meta name=twitter:description content="In the autumn of 2018 we started an epic project of a next generation SSP system, to turn our hardcoded fixed-order ad request model to a fully configurable one. This pretty much guaranteed a large boost of revenue and a total revision of our code base.
+Background     We were in a heavily solution-oriented business. In this project, a nearly zero downtime was mandatory. We had a small dev team, consisting of 2 senior devs and 1 junior, maintaining several other system components at the same time.">
+<meta property="og:title" content="Strangler Fig">
+<meta property="og:description" content="In the autumn of 2018 we started an epic project of a next generation SSP system, to turn our hardcoded fixed-order ad request model to a fully configurable one. This pretty much guaranteed a large boost of revenue and a total revision of our code base.
+Background     We were in a heavily solution-oriented business. In this project, a nearly zero downtime was mandatory. We had a small dev team, consisting of 2 senior devs and 1 junior, maintaining several other system components at the same time.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://simonpai.github.io/posts/strangler-fig/"><meta property="article:section" content="posts">
+<meta property="article:published_time" content="2021-10-10T22:00:00+08:00">
+<meta property="article:modified_time" content="2021-10-10T22:00:00+08:00">
+<title>
+Strangler Fig · Simon Pai
+</title>
+<link rel=canonical href=https://simonpai.github.io/posts/strangler-fig/>
+<link rel=preload href="/fonts/forkawesome-webfont.woff2?v=1.2.0" as=font type=font/woff2 crossorigin>
+<link rel=stylesheet href=/css/coder.min.708686f8ab8176e91d44fcbe488a0fe0333b94f405cf18a52383d67ba22f0ccb.css integrity="sha256-cIaG+KuBdukdRPy+SIoP4DM7lPQFzxilI4PWe6IvDMs=" crossorigin=anonymous media=screen>
+<link rel=stylesheet href=/css/coder-dark.min.aa883b9ce35a8ff4a2a5008619005175e842bb18a8a9f9cc2bbcf44dab2d91fa.css integrity="sha256-qog7nONaj/SipQCGGQBRdehCuxioqfnMK7z0Tastkfo=" crossorigin=anonymous media=screen>
+<link rel=stylesheet href=/scss/global.min.b9526da4644cb81c68208427acc50a7b5c3e4c1391f043127ce81e2c10f621af.css integrity="sha256-uVJtpGRMuBxoIIQnrMUKe1w+TBOR8EMSfOgeLBD2Ia8=" crossorigin=anonymous media=screen>
+<link rel=icon type=image/png href=/images/favicon-32x32.png sizes=32x32>
+<link rel=icon type=image/png href=/images/favicon-16x16.png sizes=16x16>
+<link rel=apple-touch-icon href=/images/apple-touch-icon.png>
+<link rel=apple-touch-icon sizes=180x180 href=/images/apple-touch-icon.png>
+<script src=/js/global.min.1fe7f22336598e57eb864675d43dfdc80855dc78679150ca4b516627c54bd6b2.js integrity="sha256-H+fyIzZZjlfrhkZ11D39yAhV3HhnkVDKS1FmJ8VL1rI="></script>
+<script src=/js/slides.min.960e592ad90220e499c69842bdb0e7385da7c7c5b196b62326759fe883c5f60d.js integrity="sha256-lg5ZKtkCIOSZxphCvbDnOF2nx8WxlrYjJnWf6IPF9g0="></script>
+<meta name=generator content="Hugo 0.88.1">
+</head>
+<body class="preload-transitions colorscheme-dark">
+<main class=wrapper>
+<nav class=navigation>
+<section class=container>
+<a class=navigation-title href=/>
+Simon Pai
+</a>
+<input type=checkbox id=menu-toggle>
+<label class="menu-button float-right" for=menu-toggle>
+<i class="fa fa-bars fa-fw" aria-hidden=true></i>
+</label>
+<ul class=navigation-list>
+<li class=navigation-item>
+<a class=navigation-link href=/posts/>blog</a>
+</li>
+<li class=navigation-item>
+<a class=navigation-link href=/resume/>resume</a>
+</li>
+</ul>
+</section>
+</nav>
+<div class=content>
+<section class="container post">
+<article>
+<header>
+<div class=post-title>
+<h1 class=title>
+<a class=title-link href=https://simonpai.github.io/posts/strangler-fig/>
+Strangler Fig
+</a>
+</h1>
+</div>
+<div class=post-meta>
+<div class=date>
+<span class=posted-on>
+<i class="fa fa-calendar" aria-hidden=true></i>
+<time datetime=2021-10-10T22:00:00+08:00>
+October 10, 2021
+</time>
+</span>
+<span class=reading-time>
+<i class="fa fa-clock-o" aria-hidden=true></i>
+6-minute read
+</span>
+</div>
+</div>
+</header>
+<div>
+<p>In the autumn of 2018 we started an epic project of a next generation SSP system, to turn our hardcoded fixed-order ad request model to a fully configurable one. This pretty much guaranteed a large boost of revenue and a total revision of our code base.</p>
+<h1 id=background>
+Background
+<a class=heading-link href=#background>
+<i class="fa fa-link" aria-hidden=true></i>
+</a>
+</h1>
+<ul>
+<li>We were in a heavily solution-oriented business. In this project, a nearly zero downtime was mandatory.</li>
+<li>We had a small dev team, consisting of 2 senior devs and 1 junior, maintaining several other system components at the same time.</li>
+<li>This project was the first priority until end of the year. However, the roadmap for next year was unpredictable.</li>
+</ul>
+<p>Derived from the situation, we decided to progress in the <a href=https://docs.microsoft.com/en-us/azure/architecture/patterns/strangler-fig>strangler fig pattern</a>, which means to gradually replace your system organs step by step until you reach the revision goal.</p>
+<h3 id=pros>
+Pros
+<a class=heading-link href=#pros>
+<i class="fa fa-link" aria-hidden=true></i>
+</a>
+</h3>
+<p>This strategy gave us the benefits:</p>
+<ul>
+<li>If carefully planned, we could do the revision with almost zero downtime.</li>
+<li>We could test and verify the system by small pieces with limited dev resources.</li>
+<li>We might be able to receive partial value of the project along the development.</li>
+<li>We could pause the project at certain points and pick it back later on.</li>
+</ul>
+<h3 id=cons>
+Cons
+<a class=heading-link href=#cons>
+<i class="fa fa-link" aria-hidden=true></i>
+</a>
+</h3>
+<p>There were also drawbacks:</p>
+<ul>
+<li>We needed to spend more energy on careful deployment and data migration.</li>
+<li>More temporary code meant bigger development time cost.</li>
+</ul>
+<h1 id=the-practice-of-strangler-fig>
+The Practice of Strangler Fig
+<a class=heading-link href=#the-practice-of-strangler-fig>
+<i class="fa fa-link" aria-hidden=true></i>
+</a>
+</h1>
+<p>People often talk about this pattern in the context of migrating legacy system to microservice architecture, but the concept can be generalized. In our case, it was more like an internal revision of a system of a few monoliths. It&rsquo;s also helpful to be aware of the concept of the <a href=https://docs.microsoft.com/en-us/azure/architecture/patterns/anti-corruption-layer>anti-corruption layer pattern</a>.</p>
+<p>The key idea is to start renovating the system on one node in the data flow, and then expand the territory piece by piece while maintaining a few anti-corruption layers on the boundary between new and legacy parts. Note that since we do not limit this pattern in the context of microservice, each step of renovation does not need to be a whole component/service; it can instead be as small as a software layer inside an application. The same idea applies to anti-corruption layers: they can be as thin as a function call, rather than a whole standalone service.</p>
+<p>We followed these steps to establish the development plan:</p>
+<ol>
+<li>Layout the data flow diagram of the system. It&rsquo;s up to us to split the system into workable chunks of proper sizes.</li>
+<li>Analyze each data flow dependency to realize possible expanding direction. In most of cases, it will be determined by how data schema are changed.</li>
+<li>Determine where to start, which mostly depends on the business value, business logic, and the data flow analysis.</li>
+<li>Determine steps to expand the territory and estimate the delivery schedule.</li>
+<li>Work on detailed application deployment and data migration plans for each step.</li>
+</ol>
+<h1 id=example>
+Example
+<a class=heading-link href=#example>
+<i class="fa fa-link" aria-hidden=true></i>
+</a>
+</h1>
+<p>Take our case for example, we started with a (overly simplified) data flow diagram:</p>
+<div class="full-width pausing">
+<table class="diagram center-block" style=font-size:.9em>
+<tr>
+<td>
+<node class=n0>Inventory<br>Management</node>
+</td>
+<td space="0 s">
+<edge class=e02 left right style="top: 1.6rem"></edge>
+</td>
+<td style=vertical-align:bottom>
+<node class=n1>Ad Tag</node>
+<edge class=e02 left right style="top: 1.6rem"></edge>
+</td>
+<td space="0 s">
+<edge class=e02 left right=arrow style="top: 1.6rem"></edge>
+<edge class=e12 left=arrow right=arrow style="top: 5.3rem"></edge>
+</td>
+<td>
+<node class=n2>Ad Serving<br>Service</node>
+</td>
+<td space="0 s">
+<edge class=e23 left right=arrow></edge>
+</td>
+<td>
+<node class=n3>Data<br>Pipeline</node>
+</td>
+<td space="0 s">
+<edge class=e34 left right=arrow></edge>
+</td>
+<td>
+<node class=n4>Report<br>DB Tables</node>
+</td>
+<td space="0 s">
+<edge class=e45 left right=arrow></edge>
+</td>
+<td>
+<node class=n5>Report<br>Service</node>
+</td>
+</tr>
+</table>
+</div>
+<p>In this project, the new data model sit inside a superspace of the old one. That means the new version of each part was capable of accepting data output from its old upstream given proper data transformer, which would be implemented inside its associated anti-corruption layer. On the other hand, it might not be so easy if we had proceeded from the other direction. Thus, we decided to start from the database, then marched upstream. (Note that each v2 part was a software layer sitting in the same application/database with its v1 counterpart.)</p>
+<link rel=stylesheet href=/scss/posts/strangler-fig/example-diagram.min.2622bc28e5b92f016614f3ef71c1855a010c0799b07f26da3d013e9e901a5e4a.css integrity="sha256-JiK8KOW5LwFmFPPvccGFWgEMB5mwfybaPQE+npAaXko=" crossorigin=anonymous media=screen>
+<div class=pausing>
+<div style=text-align:center;margin:.8em>
+<div class=slides-ctrl id=example-slides-ctrl><span class=prev></span><span class=display>/</span><span class=next></span></div>
+</div>
+<div id=example-slides-root>
+<div class=full-width>
+<table id=example-diagram class="diagram center-block" style=font-size:.9em>
+<tbody>
+<tr class=v1>
+<td>v1</td>
+<td space="0 xs"></td>
+<td>
+<node class=n0>Inventory<br>Management</node>
+</td>
+<td space="0 s">
+<edge class=e02 left right style="top: 1.6rem"></edge>
+</td>
+<td style=vertical-align:bottom>
+<node class=n1>Ad Tag</node>
+<edge class=e02 left right style="top: 1.6rem"></edge>
+</td>
+<td space="0 s">
+<edge class=e02 left right=arrow style="top: 1.6rem"></edge>
+<edge class=e12 left=arrow right=arrow style="top: 5.3rem"></edge>
+</td>
+<td>
+<node class=n2>Ad Serving<br>Service</node>
+</td>
+<td space="0 s">
+<edge class=e23 left right=arrow></edge>
+</td>
+<td>
+<node class=n3>Data<br>Pipeline</node>
+</td>
+<td space="0 s">
+<edge class=e34 left right=arrow></edge>
+</td>
+<td>
+<node class=n4>Report<br>DB Tables</node>
+</td>
+<td space="0 s">
+<edge class=e45 left right=arrow></edge>
+</td>
+<td>
+<node class=n5>Report<br>Service</node>
+</td>
+<td space="0 xs"></td>
+<td style=visibility:hidden>v1</td>
+</tr>
+<tr class=vx>
+<td space="s 0"></td>
+</tr>
+<tr class=v2>
+<td>v2</td>
+<td space="0 xs"></td>
+<td>
+<node class=n0>Inventory<br>Management</node>
+</td>
+<td space="0 s">
+<edge class=e02 left right style="top: 1.6rem"></edge>
+</td>
+<td style=vertical-align:bottom>
+<node class=n1>Ad Tag</node>
+<edge class=e02 left right style="top: 1.6rem"></edge>
+</td>
+<td space="0 s">
+<edge class=e02 left right=arrow style="top: 1.6rem"></edge>
+<edge class=e12 left=arrow right=arrow style="top: 5.3rem"></edge>
+</td>
+<td>
+<node class=n2>Ad Serving<br>Service</node>
+</td>
+<td space="0 s">
+<edge class=e23 left right=arrow></edge>
+</td>
+<td>
+<node class=n3>Data<br>Pipeline</node>
+</td>
+<td space="0 s">
+<edge class=e34 left right=arrow></edge>
+</td>
+<td>
+<node class=n4>Report<br>DB Tables</node>
+</td>
+<td space="0 s">
+<edge class=e45 left right=arrow></edge>
+</td>
+<td>
+<node class=n5>Report<br>Service</node>
+</td>
+<td space="0 xs"></td>
+<td style=visibility:hidden>v2</td>
+</tr>
+</tbody>
+<tbody class=overlay>
+<tr style=visibility:collapse>
+<td>v2</td>
+<td space="0 xs"></td>
+<td>
+<node class=n0>Inventory<br>Management</node>
+</td>
+<td space="0 s">
+<edge class=e02 left right style="top: 1.6rem"></edge>
+</td>
+<td style=vertical-align:bottom>
+<node class=n1>Ad Tag</node>
+<edge class=e02 left right style="top: 1.6rem"></edge>
+</td>
+<td space="0 s">
+<edge class=e02 left right=arrow style="top: 1.6rem"></edge>
+<edge class=e12 left=arrow right=arrow style="top: 5.3rem"></edge>
+</td>
+<td>
+<node class=n2>Ad Serving<br>Service</node>
+</td>
+<td space="0 s">
+<edge class=e23 left right=arrow></edge>
+</td>
+<td>
+<node class=n3>Data<br>Pipeline</node>
+</td>
+<td space="0 s">
+<edge class=e34 left right=arrow></edge>
+</td>
+<td>
+<node class=n4>Report<br>DB Tables</node>
+</td>
+<td space="0 s">
+<edge class=e45 left right=arrow></edge>
+</td>
+<td>
+<node class=n5>Report<br>Service</node>
+</td>
+<td space="0 xs"></td>
+<td>v2</td>
+</tr>
+<tr space class=v1o>
+<td></td>
+<td></td>
+<td class=hspan>
+<node style="visibility: hidden;">&nbsp;<br>&nbsp;</node>
+</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>
+<edge left bottom class=e2x3></edge>
+</td>
+<td></td>
+<td>
+<edge left bottom class=e3x4></edge>
+</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr space class=vxo>
+<td space="s 0"></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>
+<edge top bottom=arrow class=e2x2></edge>
+<slice hor class=e2x2></slice>
+</td>
+<td>
+<edge top bottom class=e2x3></edge>
+<slice hor class=e2x3></slice>
+</td>
+<td></td>
+<td>
+<edge top bottom class=e3x4></edge>
+<slice hor class=e3x4></slice>
+</td>
+<td>
+<edge top bottom=arrow class=e4x4></edge>
+<slice hor class=e4x4></slice>
+</td>
+<td></td>
+<td></td>
+</tr>
+<tr space class=v2o>
+<td></td>
+<td></td>
+<td class=hspan>
+<node style="visibility: hidden;">&nbsp;<br>&nbsp;</node>
+</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td>
+<edge top right=arrow class=e2x3></edge>
+</td>
+<td></td>
+<td>
+<edge top right=arrow class=e3x4></edge>
+</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id=caption>
+<div class=c1>
+<ul>
+<li>We started with migrating report data.</li>
+<li>Correctness of data in v2 tables were constantly verified and monitored.</li>
+</ul>
+</div>
+<div class=c2>
+<ul>
+<li>We used the same transform function on the output of data pipeline to write new report data into v2 tables.</li>
+</ul>
+</div>
+<div class=c3>
+<ul>
+<li>The new report service was implemented as an experiment, only accessible by developers.</li>
+<li>We moved verification target from DB tables to report service.</li>
+</ul>
+</div>
+<div class=c4>
+<ul>
+<li>We advanced the frontline to data pipeline.</li>
+</ul>
+</div>
+<div class=c5>
+<ul>
+<li>Having enough confidence, we switched to use report service v2 formally, but still kept verification and monitoring for a while.</li>
+</ul>
+</div>
+<div class=c6>
+<ul>
+<li>As the new downstream was thoroughly verified, the old counterpart was removed.</li>
+</ul>
+</div>
+<div class=c7>
+<ul>
+<li>We started to work on the new ad service.</li>
+<li>Mock traffic was sent to generate ad events so we could verify the report outcome.</li>
+</ul>
+</div>
+<div class=c8>
+<ul>
+<li>Now ads were served under v2 data model, translated from v1 model inside the ad server.</li>
+<li>A new client side ad script module was made to do more experiment with the new route.</li>
+</ul>
+</div>
+<div class=c9>
+<ul>
+<li>We switched to use the new ad script module, deprecating the old one.</li>
+</ul>
+</div>
+<div class=c10>
+<ul>
+<li>We implemented the new management service, completing the last mile of the project.</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<script>(function(){var a=new window.sdk.SlidesModel(10);a.bind.ctrl('#example-slides-ctrl'),a.bind.view('#example-slides-root')})()</script>
+<h1 id=useful-tactics>
+Useful Tactics
+<a class=heading-link href=#useful-tactics>
+<i class="fa fa-link" aria-hidden=true></i>
+</a>
+</h1>
+<h3 id=feature-flag>
+Feature Flag
+<a class=heading-link href=#feature-flag>
+<i class="fa fa-link" aria-hidden=true></i>
+</a>
+</h3>
+<p>When we want to be more secure on a task that changes some critical system behavior, we can split the work into commits to minimize the code change in the one commit that really modifies the behavior. Optimally, the behavior-changing commit can be as small as a one-liner switch of feature flag. This method gives us a safer retreat scenario. A typical commit sequence would look like:</p>
+<ol>
+<li>Refactoring (create the feature flag mechanism)</li>
+<li>Switch feature flag</li>
+<li>Verification (we can stay in this stage for a while, until we feel secure)</li>
+<li>Refactoring (eliminate the feature flag mechanism)</li>
+</ol>
+<p>I often illustrate this idea by the &ldquo;three points of contact&rdquo; principle in rock climbing.</p>
+<h3 id=extra-verification-with-production-data>
+Extra Verification with Production Data
+<a class=heading-link href=#extra-verification-with-production-data>
+<i class="fa fa-link" aria-hidden=true></i>
+</a>
+</h3>
+<p>Sometimes we don&rsquo;t have the confidence to just roll out the change. In such case, we can let both new and legacy parts coexist for a while, verify and monitor the their outcomes, and discard the legacy part when we think it&rsquo;s ready. A typical workflow would be:</p>
+<ol>
+<li>Build the new part and connect to the data flow upstream.</li>
+<li>The current anti-corruption layer takes outcomes from both parts, verify and monitor them.</li>
+<li>When the new part is thoroughly verified, switch the data path to use the new version. We can keep monitoring facility for a while just in case.</li>
+<li>Remove the legacy part and clean up.</li>
+</ol>
+</div>
+<footer>
+</footer>
+</article>
+</section>
+</div>
+<footer class=footer>
+<section class=container>
+©
+2021
+·
+Powered by <a href=https://gohugo.io/>Hugo</a> & <a href=https://github.com/luizdepra/hugo-coder/>Coder</a>.
+</section>
+</footer>
+</main>
+<script src=/js/coder.min.03b17769f4f91ae35667e1f2a1ca8c16f50562576cf90ff32b3179926914daa5.js integrity="sha256-A7F3afT5GuNWZ+HyocqMFvUFYlds+Q/zKzF5kmkU2qU="></script>
+</body>
+</html>
